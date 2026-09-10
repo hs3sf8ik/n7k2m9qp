@@ -47,7 +47,7 @@
 
   /* ══════════════════════════  1. 카드퀴즈  ══════════════════════════ */
 
-  var LAYERS = ["1수준 두문자", "2수준 두문자", "연상문장"];
+  var LAYERS = ["1수준 두문자", "2수준 두문자"];
 
   var deck = [];
   var at = 0;
@@ -79,7 +79,7 @@
   function lv2Html(s) {
     return s.split(/\s+/).filter(Boolean).map(function (g) {
       return '<span class="grp">' + esc(g) + "</span>";
-    }).join("");
+    }).join(" ");
   }
 
   function render() {
@@ -104,20 +104,26 @@
     var bodies = [
       '<div class="lv1">' + lv1Html(c.lv1) + "</div>",
       '<div class="lv2">' + lv2Html(c.lv2) + "</div>",
-      '<div class="lv3">' + esc(c.hint) + "</div>",
     ];
 
+    // 갓 열린 층에만 등장 효과를 준다. 이미 나와 있던 층은 그대로 둔다.
     for (var i = 0; i < open; i++) {
-      if (!bodies[i]) continue;
-      html += '<div class="layer">' +
+      html += '<div class="layer' + (i === open - 1 ? " new" : "") + '">' +
         '<span class="layer-tag">' + LAYERS[i] + "</span>" +
         bodies[i] + "</div>";
     }
 
     html += "</div>";
-    html += '<span class="tap-hint">' +
-      (open < LAYERS.length ? "탭하면 " + LAYERS[open] : "탭하면 다음 카드") +
-      "</span>";
+
+    // 연상문장은 단계가 아니라, 1수준부터 카드 오른쪽 아래에 계속 떠 있는 힌트
+    html += '<div class="card-foot">' +
+      '<span class="tap-hint">' +
+        (open < LAYERS.length ? "탭하면 " + LAYERS[open] : "탭하면 다음 카드") +
+      "</span>" +
+      (open >= 1 && c.hint
+        ? '<span class="hint' + (open === 1 ? " new" : "") + '">' + esc(c.hint) + "</span>"
+        : "") +
+      "</div>";
 
     host.innerHTML = html;
     $("count").textContent = at + 1 + " / " + deck.length;

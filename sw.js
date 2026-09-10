@@ -1,5 +1,5 @@
 // 오프라인 지원. 파일을 고친 뒤에는 VERSION 을 올려야 갱신됩니다.
-var VERSION = "v2";
+var VERSION = "v3";
 var ASSETS = [
   "./", "./index.html", "./css/style.css", "./js/app.js",
   "./data/a.js", "./data/b.js", "./manifest.webmanifest"
