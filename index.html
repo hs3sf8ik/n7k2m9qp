@@ -39,14 +39,25 @@
         <option value="seq">번호순</option>
         <option value="random">무작위</option>
       </select>
+      <button type="button" class="go" id="go">이동</button>
+      <button type="button" class="go out" id="out" hidden>내보내기</button>
       <span class="count" id="count"></span>
     </div>
 
-    <button type="button" class="card" id="card" aria-live="polite"></button>
+    <div class="card" id="card" aria-live="polite"></div>
 
     <div class="pager">
       <button type="button" id="prev">← 이전</button>
       <button type="button" id="next">다음 →</button>
+    </div>
+
+    <div class="try">
+      <div class="try-top">
+        <label for="typing">직접 써보기</label>
+        <button type="button" id="try-clear">지우기</button>
+      </div>
+      <textarea id="typing" rows="2" autocomplete="off" autocapitalize="off"
+        spellcheck="false" placeholder="기억나는 두문자를 적어보세요"></textarea>
     </div>
   </section>
 
@@ -56,6 +67,68 @@
 
 </main>
 
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-panel" role="dialog" aria-modal="true" aria-label="카드 이동">
+    <div class="search">
+      <input type="search" id="q" autocomplete="off" placeholder="번호 · 제목 · 두문자 · 초성">
+      <button type="button" id="sheet-x" aria-label="닫기">✕</button>
+    </div>
+    <div class="toc sheet-list" id="sheet-list"></div>
+  </div>
+</div>
+
+<div class="sheet" id="esheet" hidden>
+  <div class="sheet-panel" role="dialog" aria-modal="true" aria-label="두문자 수정">
+    <div class="e-head">
+      <strong id="e-title"></strong>
+      <button type="button" id="e-x" aria-label="닫기">✕</button>
+    </div>
+    <div class="e-body">
+      <label for="e1">1수준 두문자</label>
+      <textarea id="e1" rows="1" spellcheck="false"></textarea>
+      <label for="e2">2수준 두문자</label>
+      <textarea id="e2" rows="3" spellcheck="false"></textarea>
+      <label for="e3">연상문장</label>
+      <textarea id="e3" rows="2" spellcheck="false"></textarea>
+    </div>
+    <div class="e-act">
+      <button type="button" id="e-reset">원래대로</button>
+      <button type="button" id="e-save" class="primary">저장</button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet" id="psheet" hidden>
+  <div class="sheet-panel narrow" role="dialog" aria-modal="true" aria-label="관리자 확인">
+    <div class="e-head"><strong>관리자 확인</strong>
+      <button type="button" id="p-x" aria-label="닫기">✕</button></div>
+    <div class="e-body">
+      <label for="pw">비밀번호</label>
+      <input type="password" id="pw" autocomplete="current-password">
+      <p class="p-msg" id="p-msg" hidden>비밀번호가 맞지 않습니다.</p>
+    </div>
+    <div class="e-act"><button type="button" id="p-ok" class="primary">확인</button></div>
+  </div>
+</div>
+
+<div class="sheet" id="xsheet" hidden>
+  <div class="sheet-panel" role="dialog" aria-modal="true" aria-label="수정본 내보내기">
+    <div class="e-head"><strong id="x-title">수정본 내보내기</strong>
+      <button type="button" id="x-x" aria-label="닫기">✕</button></div>
+    <div class="e-body">
+      <p class="x-help">아래 내용을 <code>overrides.json</code> 으로 저장해
+        PC 의 <code>source</code> 폴더에 넣고 <code>python build.py</code> 를 실행하세요.</p>
+      <textarea id="x-text" rows="6" readonly spellcheck="false"></textarea>
+    </div>
+    <div class="e-act">
+      <button type="button" id="x-wipe">이 기기 수정본 지우기</button>
+      <button type="button" id="x-copy">복사</button>
+      <button type="button" id="x-save" class="primary">파일로 저장</button>
+    </div>
+  </div>
+</div>
+
+<script src="data/c.js"></script>
 <script src="data/a.js"></script>
 <script src="data/b.js"></script>
 <script src="js/app.js"></script>
