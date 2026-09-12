@@ -439,6 +439,14 @@ select { font: inherit; }
   font-size: 0.9375rem;
 }
 
+.build {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
 .none { padding: 2rem 0.25rem; color: var(--ink-3); font-weight: 600; }
 
 /* 이동 패널 */

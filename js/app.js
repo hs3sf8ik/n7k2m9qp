@@ -643,7 +643,9 @@
     $("read-body").innerHTML =
       '<div class="search"><input type="search" id="dq" autocomplete="off" ' +
       'placeholder="번호 · 제목 · 두문자 · 초성" value="' + esc(docQuery) + '"></div>' +
-      '<div class="toc" id="toc-list">' + rowsHtml(DOCS, DOC_IX, docQuery) + "</div>";
+      '<div class="toc" id="toc-list">' + rowsHtml(DOCS, DOC_IX, docQuery) + "</div>" +
+      '<p class="build">v9 · 단문 ' + DOCS.length + ' · 카드 ' + CARDS.length +
+      ' · 개념 ' + CONS.length + "</p>";
   }
 
   // "의의 : 특정인에…"  →  콜론 앞 라벨을 굵게
