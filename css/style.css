@@ -333,7 +333,7 @@ select { font: inherit; }
 .try-top button { font-size: 0.8125rem; font-weight: 600; color: var(--ink-3); }
 .try-top button:active { color: var(--indigo); }
 
-#typing {
+.try textarea {
   display: block;
   width: 100%;
   font-family: inherit;
@@ -351,8 +351,8 @@ select { font: inherit; }
   -webkit-appearance: none;
   appearance: none;
 }
-#typing::placeholder { font-weight: 500; color: var(--ink-3); letter-spacing: 0; }
-#typing:focus { border-color: var(--indigo); outline: none; }
+.try textarea::placeholder { font-weight: 500; color: var(--ink-3); letter-spacing: 0; }
+.try textarea:focus { border-color: var(--indigo); outline: none; }
 
 /* ─────────────────────────────  단문 열람  ───────────────────────────── */
 

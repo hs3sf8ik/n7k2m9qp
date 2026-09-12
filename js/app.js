@@ -154,7 +154,7 @@
     }
     at = keepNo ? Math.max(seek(keepNo), 0) : 0;
     open = 0;
-    clearTry();
+    clearBox("typing");
     render();
   }
 
@@ -228,29 +228,30 @@
   }
 
   /* 직접 써보기 — 카드가 바뀌면 비운다. 어디에도 저장하지 않는다 */
-  function grow() {
-    var el = $("typing");
-    el.style.height = "auto";
-    el.style.height = el.scrollHeight + "px";
-  }
-
-  function clearTry() {
-    var el = $("typing");
+  function clearBox(id) {
+    var el = $(id);
     if (!el) return;
     el.value = "";
     el.style.height = "";
   }
 
-  $("typing").addEventListener("input", grow);
-  $("try-clear").addEventListener("click", function () {
-    clearTry();
-    $("typing").focus();
+  [["typing", "try-clear"], ["c-typing", "c-try-clear"]].forEach(function (pair) {
+    var box = $(pair[0]);
+    if (!box) return;
+    box.addEventListener("input", function () {
+      this.style.height = "auto";
+      this.style.height = this.scrollHeight + "px";
+    });
+    $(pair[1]).addEventListener("click", function () {
+      clearBox(pair[0]);
+      box.focus();
+    });
   });
 
   function step() {
     if (!deck.length) return;
     if (open < LAYERS.length) { open++; }
-    else if (at < deck.length - 1) { at++; open = 0; clearTry(); }
+    else if (at < deck.length - 1) { at++; open = 0; clearBox("typing"); }
     render();
   }
 
@@ -258,7 +259,7 @@
     if (!deck.length) return;
     var was = at;
     at = Math.min(Math.max(at + d, 0), deck.length - 1);
-    if (at !== was) clearTry();
+    if (at !== was) clearBox("typing");
     open = 0;
     render();
   }
@@ -274,7 +275,7 @@
       open = 0;
       render();
     }
-    clearTry();
+    clearBox("typing");
     closeSheet();
     window.scrollTo(0, 0);
   }
@@ -346,7 +347,9 @@
   $("sheet-list").addEventListener("click", function (e) {
     var t = e.target.closest("button");
     if (!t) return;
-    if (sheetMode === "con") { cAt = Number(t.dataset.i); cOpen = 0; cRender(); closeSheet(); }
+    if (sheetMode === "con") {
+      cAt = Number(t.dataset.i); cOpen = 0; clearBox("c-typing"); cRender(); closeSheet();
+    }
     else jump(Number(t.dataset.i));
     window.scrollTo(0, 0);
   });
@@ -516,6 +519,7 @@
     }
     cAt = 0;
     cOpen = 0;
+    clearBox("c-typing");
     cRender();
   }
 
@@ -572,13 +576,15 @@
   function cStep() {
     if (!cDeck.length) return;
     if (cOpen < C_LAYERS.length) cOpen++;
-    else if (cAt < cDeck.length - 1) { cAt++; cOpen = 0; }
+    else if (cAt < cDeck.length - 1) { cAt++; cOpen = 0; clearBox("c-typing"); }
     cRender();
   }
 
   function cMove(d) {
     if (!cDeck.length) return;
+    var was = cAt;
     cAt = Math.min(Math.max(cAt + d, 0), cDeck.length - 1);
+    if (cAt !== was) clearBox("c-typing");
     cOpen = 0;
     cRender();
   }
@@ -644,7 +650,7 @@
       '<div class="search"><input type="search" id="dq" autocomplete="off" ' +
       'placeholder="번호 · 제목 · 두문자 · 초성" value="' + esc(docQuery) + '"></div>' +
       '<div class="toc" id="toc-list">' + rowsHtml(DOCS, DOC_IX, docQuery) + "</div>" +
-      '<p class="build">v9 · 단문 ' + DOCS.length + ' · 카드 ' + CARDS.length +
+      '<p class="build">v10 · 단문 ' + DOCS.length + ' · 카드 ' + CARDS.length +
       ' · 개념 ' + CONS.length + "</p>";
   }
 

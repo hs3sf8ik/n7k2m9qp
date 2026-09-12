@@ -1,7 +1,7 @@
 // 오프라인 지원.
 // 네트워크를 먼저 보고 실패하면 캐시를 쓴다. 캐시를 먼저 보면 파일을 새로 올려도
 // 옛 화면이 계속 나와서, 그게 더 큰 문제였다.
-var VERSION = "v9";
+var VERSION = "v10";
 var ASSETS = [
   "./", "./index.html", "./css/style.css", "./js/app.js",
   "./data/a.js", "./data/b.js", "./data/c.js", "./data/d.js",
